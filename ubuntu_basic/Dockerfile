@@ -1,19 +1,16 @@
 From ubuntu:20.04
 
-LABEL org.opencontainers.image.description="Ubuntu 22.04 install basic environment & tools" \
-      org.opencontainers.image.authors="plain ji" \
-      org.opencontainers.image.documentation="https://hub.docker.com/u/plainji/ubuntu2204" \
+LABEL org.opencontainers.image.description="Ubuntu 22.04 with basic environment & tools" \
+      org.opencontainers.image.authors="Plain Ji" \
+      org.opencontainers.image.documentation="https://hub.docker.com/r/plainji/ubuntu20.04" \
       org.opencontainers.image.source="https://github.com/plainji/Dockerfiles"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG SOURCES_FILE=/etc/apt/sources.list
-ARG HOST_NAME=`hostname`
 
     # change host name
-RUN > /etc/hostname && echo "plain" >> /etc/hostname && \
-    sed 's/$HOST_NAME/plain/g' /etc/hosts && \
-    apt update && \
+RUN apt update && \
     # install ca
     apt install -y ca-certificates && \
     # replace apt sources
@@ -26,7 +23,7 @@ RUN > /etc/hostname && echo "plain" >> /etc/hostname && \
     # install some basic tools
     apt update && \
     # `add-apt-repository` add pgp key tool
-    apt install -y software-properties-common apt-transport-https gnupg \
+    apt install -y apt-utils software-properties-common apt-transport-https gnupg \
         # system
         sudo vim bash-completion lsb-release \
         # network tools
